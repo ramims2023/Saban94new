@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ניהול משימות לנהגים</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 20px;
+        }
+        .calendar, .task-form, .task-table, .notes {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+        .calendar {
+            text-align: center;
+        }
+        .task-form input, .task-form select, .notes input {
+            margin: 5px 10px;
+        }
+        .task-form label, .notes label {
+            display: inline-block;
+            width: 120px;
+        }
+        .task-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .task-table table th, .task-table table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .task-table .status-ready {
+            background-color: #90ee90;
+            animation: blink 1s infinite;
+        }
+        .task-table .status-delayed {
+            background-color: #ffcccb;
+            animation: blink 1s infinite;
+        }
+        .task-table .status-preparing {
+            background-color: #add8e6;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            50% {
+                opacity: 0.6;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calendar">
+        <h2>לוח שנה</h2>
+        <iframe src="https://calendar.google.com/calendar/embed" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+    </div>
+
+    <div class="task-form">
+        <h2>הוספת משימה</h2>
+        <form>
+            <label for="driver">שם נהג:</label>
+            <select id="driver" name="driver">
+                <option>חכמת</option>
+                <option>שאול</option>
+                <option>עלא</option>
+                <option>יואב</option>
+                <option>עלי</option>
+            </select>
+
+            <label for="client-name">שם לקוח:</label>
+            <input type="text" id="client-name" name="client-name">
+
+            <label for="client-address">כתובת לקוח:</label>
+            <input type="text" id="client-address" name="client-address">
+
+            <label for="status">סטטוס הזמנה:</label>
+            <select id="status" name="status">
+                <option class="status-ready">כן</option>
+                <option class="status-delayed">לא</option>
+            </select>
+
+            <label for="warehouse">מחסן:</label>
+            <select id="warehouse" name="warehouse">
+                <option style="background-color: purple;">מחסן 1</option>
+                <option style="background-color: green;">מחסן 4</option>
+            </select>
+
+            <label for="exit">יציאה:</label>
+            <select id="exit" name="exit">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+
+            <label for="time">שעה:</label>
+            <select id="time" name="time">
+                <option>06:00</option>
+                <option>06:30</option>
+                <option>07:00</option>
+                <!-- Add options up to 17:00 -->
+            </select>
+
+            <label for="transport-type">סוג הובלה:</label>
+            <select id="transport-type" name="transport-type">
+                <option>משאית 🛻</option>
+                <option>טנדר 🚚</option>
+                <option>מנוף 15 מטר 🏗️</option>
+                <option>מנוף 10 מטר</option>
+            </select>
+
+            <label for="distance">מרחק בק"מ:</label>
+            <input type="number" id="distance" name="distance" disabled>
+
+            <button type="submit">הוסף משימה</button>
+        </form>
+    </div>
+
+    <div class="task-table">
+        <h2>טבלת משימות</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>נהג</th>
+                    <th>לקוח</th>
+                    <th>כתובת</th>
+                    <th>סטטוס</th>
+                    <th>מחסן</th>
+                    <th>יציאה</th>
+                    <th>שעה</th>
+                    <th>סוג הובלה</th>
+                    <th>מרחק</th>
+                    <th>פעולות</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows dynamically generated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="notes">
+        <h2>הערות</h2>
+        <form>
+            <label for="note-author">מוסיף ההערה:</label>
+            <select id="note-author" name="note-author">
+                <option>ראמי</option>
+                <option>יואב</option>
+                <option>איציק</option>
+                <option>הראל</option>
+                <option>נתנאל</option>
+                <option>תמיר</option>
+            </select>
+
+            <label for="note">הערה:</label>
+            <input type="text" id="note" name="note">
+
+            <button type="submit">הוסף הערה</button>
+        </form>
+    </div>
+
+    <button onclick="resetPage()">מחיקת סידור</button>
+
+    <script>
+        function resetPage() {
+            if (confirm('האם אתה בטוח שברצונך למחוק את כל הנתונים?')) {
+                location.reload();
+            }
+        }
+    </script>
+
+</body>
+</html>
