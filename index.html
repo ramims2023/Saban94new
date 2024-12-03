@@ -34,6 +34,238 @@
         }
     </style>
 </head>
+    <!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>-</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 12px;
+        }
+        h1, label, th, td, .btn, select, input {
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+        label {
+            margin-right: 15px;
+        }
+        .form-row {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        table {
+            width: 80%;
+            margin: 12px auto;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+        .warehouse-1 {
+            color: purple;
+        }
+        .warehouse-4 {
+            color: green;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px10px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .summary {
+            margin-top: 20px;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+        .summary .warehouse-1 {
+            color: purple;
+        }
+        .summary .warehouse-4 {
+          
+        }
+    </style>
+</head>
+<body>
+  <p>
+<p>
+ <p>
+    <div>
+        <div class="form-row">
+            <label for="driver">נהג:</label>
+            <select id="driver">
+                <option value="עלי">עלי</option>
+                <option value="חכמת">חכמת</option>
+                <option value="שאול">שאול</option>
+                <option value="יואב">יואב</option>
+                <option value="עלאא">עלאא</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="client">👤לקוח:</label>
+            <input type="text" id="client" placeholder="הכנס שם לקוח">
+        </div>
+        <div class="form-row">
+            <label for="warehouse">📍מחסן:</label>
+            <select id="warehouse">
+                <option value="מחסן 1">מחסן 1</option>
+                <option value="מחסן 4">מחסן 4</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="exit-number">יציאה:</label>
+            <select id="exit-number">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="time">⏰שעה:</label>
+            <select id="time">
+                <option value="06:00">06:00</option>
+                <option value="07:00">07:00</option>
+                <option value="08:00">08:00</option>
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="transport-type">סוג הובלה:</label>
+            <select id="transport-type">
+                <option value="הובלת מנוף🚚 ">הובלת מנוף</option>
+                <option value="הובלת מנוף 🚛15">הובלת מנוף 15</option>
+                <option value="הובלת משאית   🚛">הובלת משאית </option>
+                <option value="טנדר📤 ">טנדר</option>
+                <option value="עבודת מנוף">עבודת מנוף</option>
+            </select>
+        </div>
+        <button class="btn" onclick="addExit()">הוספת יציאה</button>
+    </div>
+    <table id="summary-table">
+        <thead>
+            <tr>
+                <th>נהג</th>
+                <th>לקוח</th>
+                <th>מחסן</th>
+                <th>יציאה</th>
+                <th>שעה</th>
+                <th>סוג הובלה</th>
+                <th>פעולות</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <div class="summary" id="driver-summary"></div>
+    <button class="btn" onclick="shareData()"></button>
+
+    <script>
+        let exits = [];
+
+        function addExit() {
+            const driver = document.getElementById('driver').value;
+            const client = document.getElementById('client').value;
+            const warehouse = document.getElementById('warehouse').value;
+            const exitNumber = document.getElementById('exit-number').value;
+            const time = document.getElementById('time').value;
+            const transportType = document.getElementById('transport-type').value;
+
+            const newExit = { driver, client, warehouse, exitNumber, time, transportType };
+            exits.push(newExit);
+            updateTable();
+        }
+
+        function deleteExit(index) {
+            exits.splice(index, 1);
+            updateTable();
+        }
+
+        function updateTable() {
+            const tbody = document.getElementById('summary-table').querySelector('tbody');
+            tbody.innerHTML = '';
+            exits.forEach((exit, index) => {
+                const row = `
+                    <tr class="${exit.warehouse === 'מחסן 1' ? 'warehouse-1' : 'warehouse-4'}">
+                        <td>${exit.driver}</td>
+                        <td>${exit.client}</td>
+                        <td>${exit.warehouse}</td>
+                        <td>${exit.exitNumber}</td>
+                        <td>${exit.time}</td>
+                        <td>${exit.transportType}</td>
+                        <td><button onclick="deleteExit(${index})">מחק</button></td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const totalExits = exits.length;
+            const driversWithExits = new Set(exits.map(exit => exit.driver)).size;
+            const warehouse1Exits = exits.filter(exit => exit.warehouse === 'מחסן 1').length;
+            const warehouse4Exits = exits.filter(exit => exit.warehouse === 'מחסן 4').length;
+
+            const summaryDiv = document.getElementById('driver-summary');
+            summaryDiv.innerHTML = `
+                <div>סה"כ יציאות: ${totalExits}</div>
+                <div>סה"כ נהגים עם יציאות: ${driversWithExits}</div>
+                <div class="warehouse-1">יציאות ממחסן 1: ${warehouse1Exits}</div>
+                <div class="warehouse-4">יציאות ממחסן 4: ${warehouse4Exits}</div>
+            `;
+        }
+
+        function shareData() {
+            let data = '';
+            const groupedExits = exits.reduce((acc, exit) => {
+                acc[exit.driver] = acc[exit.driver] || [];
+                acc[exit.driver].push(exit);
+                return acc;
+            }, {});
+
+            Object.entries(groupedExits).forEach(([driver, driverExits]) => {
+                data += `*${driver}*\n`;
+                driverExits.forEach(exit => {
+                    data += `${exit.client} ${exit.warehouse} ${exit.exitNumber} ${exit.time} ${exit.transportType}\n`;
+                });
+            });
+
+            const totalExits = exits.length;
+            data += `סה"כ יציאות: ${totalExits}`;
+
+            const whatsappLink = `https://wa.me/972508860896?text=${encodeURIComponent(data)}`;
+            window.open(whatsappLink, '_blank');
+        }
+    </script>
+</body>
+</html>
+
 <body>
 
     <!-- לוח שנה -->
