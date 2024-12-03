@@ -1,110 +1,249 @@
-// ... existing code ...
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ניהול משימות לנהגים</title>
+    <style>
+        body {
+            background-color: #f0f8ff; /* צבע רקע עדין */
+            font-family: Arial, sans-serif;
+        }
+        .flashing-green {
+            background-color: #90ee90;
+            animation: flash 1s infinite;
+        }
+        .flashing-red {
+            background-color: #ffcccb;
+            animation: flash 1s infinite;
+        }
+        .flashing-blue {
+            background-color: #add8e6;
+            animation: flash 1s infinite;
+        }
+        @keyframes flash {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .calendar, .form, .table, .reports, .messages, .reset-button {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
 
-<script>
-    // הוספת משתנה גלובלי לשמירת היציאות
-    let exits = JSON.parse(localStorage.getItem('exits')) || [];
-    
-    // עדכון פונקציית addExit
-    function addExit() {
-        const driver = document.getElementById('driver').value;
-        const client = document.getElementById('client').value;
-        const warehouse = document.getElementById('warehouse').value;
-        const exitNumber = document.getElementById('exit-number').value;
-        const time = document.getElementById('time').value;
-        const transportType = document.getElementById('transport-type').value;
+    <!-- לוח שנה -->
+    <div class="calendar">
+        <h2>לוח שנה</h2>
+        <!-- לוח שנה דינאמי יתווסף כאן -->
+    </div>
 
-        const newExit = { driver, client, warehouse, exitNumber, time, transportType };
-        exits.push(newExit);
-        // שמירה ב-localStorage
-        localStorage.setItem('exits', JSON.stringify(exits));
-        updateTable();
-    }
+    <!-- טופס ניהול יציאות -->
+    <div class="form">
+        <h2>טופס ניהול יציאות</h2>
+        <form>
+            <label for="driver">נהג:</label>
+            <select id="driver">
+                <option>חכמת</option>
+                <option>עלי</option>
+                <option>יואב</option>
+                <option>שאול</option>
+                <option>עלאא</option>
+            </select>
+            <br>
+            <label for="customer-name">שם לקוח:</label>
+            <input type="text" id="customer-name">
+            <br>
+            <label for="customer-address">כתובת לקוח:</label>
+            <input type="text" id="customer-address">
+            <br>
+            <label for="order-status">סטטוס הזמנה:</label>
+            <select id="order-status">
+                <option class="flashing-green">כן</option>
+                <option class="flashing-red">לא</option>
+            </select>
+            <br>
+            <label for="warehouse">מחסן מוצא:</label>
+            <select id="warehouse">
+                <option class="flashing-blue">מחסן 1</option>
+                <option class="flashing-green">מחסן 4</option>
+            </select>
+            <br>
+            <label for="exit-number">מספר יציאה:</label>
+            <select id="exit-number">
+                <option>יציאה 1</option>
+                <option>יציאה 2</option>
+                <option>יציאה 3</option>
+                <option>יציאה 4</option>
+                <option>יציאה 5</option>
+            </select>
+            <br>
+            <label for="time">שעה:</label>
+            <select id="time">
+                <!-- שעות בין 06:00–17:00 -->
+                <option>06:00</option>
+                <option>06:30</option>
+                <!-- הוספת שעות נוספות -->
+            </select>
+            <br>
+            <label for="transport-type">סוג הובלה:</label>
+            <select id="transport-type">
+                <option>משאית 🚚</option>
+                <option>טנדר 🚚</option>
+                <option>מנוף 15 מטר</option>
+                <option>מנוף 10 מטר</option>
+            </select>
+        </form>
+    </div>
 
-    // עדכון פונקציית deleteExit
-    function deleteExit(index) {
-        exits.splice(index, 1);
-        // עדכון ה-localStorage לאחר מחיקה
-        localStorage.setItem('exits', JSON.stringify(exits));
-        updateTable();
-    }
+    <!-- טבלה דינאמית -->
+    <div class="table">
+        <h2>טבלה דינאמית</h2>
+        <!-- טבלה להצגת משימות -->
+    </div>
 
-    // הוספת טעינת נתונים בעת טעינת הדף
-    window.onload = function() {
-        updateTable();
-    }
+    <!-- דוחות סטטיסטיים -->
+    <div class="reports">
+        <h2>דוחות סטטיסטיים</h2>
+        <!-- דוחות יתווספו כאן -->
+    </div>
 
-    // ... rest of the existing code ...
+    <!-- תיבת הודעות -->
+    <div class="messages">
+        <h2>תיבת הודעות</h2>
+        <form>
+            <label for="note-writer">כותב ההערה:</label>
+            <select id="note-writer">
+                <option>אורן</option>
+                <option>יואב</option>
+                <option>איציק</option>
+                <option>נתנאל</option>
+                <option>הראל</option>
+                <option>תמיר</option>
+            </select>
+            <br>
+            <label for="note">הערה:</label>
+            <textarea id="note"></textarea>
+        </form>
+    </div>
 
-    // עבור החלק של ההערות, נוסיף שמירה גם להערות
-    let notes = JSON.parse(localStorage.getItem('notes')) || [];
+    <!-- כפתור מחיקת סידור -->
+    <div class="reset-button">
+        <button>מחיקת סידור</button>
+    </div>
 
-    function addNote() {
-        const noteInput = document.getElementById("noteInput").value;
-        const noteUpdater = document.getElementById("noteUpdater").value;
-        const currentTime = new Date().toLocaleTimeString();
+    <script>
+        // הוספת משתנה גלובלי לשמירת היציאות
+        let exits = JSON.parse(localStorage.getItem('exits')) || [];
         
-        if (!noteInput) {
-            alert("אנא הקלד הערה.");
-            return;
+        // עדכון פונקציית addExit
+        function addExit() {
+            const driver = document.getElementById('driver').value;
+            const client = document.getElementById('client').value;
+            const warehouse = document.getElementById('warehouse').value;
+            const exitNumber = document.getElementById('exit-number').value;
+            const time = document.getElementById('time').value;
+            const transportType = document.getElementById('transport-type').value;
+
+            const newExit = { driver, client, warehouse, exitNumber, time, transportType };
+            exits.push(newExit);
+            // שמירה ב-localStorage
+            localStorage.setItem('exits', JSON.stringify(exits));
+            updateTable();
         }
 
-        const newNote = {
-            text: noteInput,
-            status: 'בטיפול',
-            time: currentTime,
-            updater: noteUpdater
-        };
+        // עדכון פונקציית deleteExit
+        function deleteExit(index) {
+            exits.splice(index, 1);
+            // עדכון ה-localStorage לאחר מחיקה
+            localStorage.setItem('exits', JSON.stringify(exits));
+            updateTable();
+        }
 
-        notes.push(newNote);
-        localStorage.setItem('notes', JSON.stringify(notes));
-        renderNotes();
-        document.getElementById("noteInput").value = "";
-    }
+        // הוספת טעינת נתונים בעת טעינת הדף
+        window.onload = function() {
+            updateTable();
+        }
 
-    function renderNotes() {
-        const tableBody = document.getElementById("notesTableBody");
-        tableBody.innerHTML = '';
-        
-        notes.forEach((note, index) => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${note.text}</td>
-                <td>
-                    <select onchange="updateNoteStatus(${index}, this.value)">
-                        <option value="בטיפול" ${note.status === 'בטיפול' ? 'selected' : ''}>בטיפול</option>
-                        <option value="טופלה" ${note.status === 'טופלה' ? 'selected' : ''}>טופלה</option>
-                    </select>
-                </td>
-                <td>${note.time}</td>
-                <td>${note.updater}</td>
-                <td><button class="delete-btn" onclick="deleteNote(${index})">מחק</button></td>
-            `;
+        // ... rest of the existing code ...
+
+        // עבור החלק של ההערות, נוסיף שמירה גם להערות
+        let notes = JSON.parse(localStorage.getItem('notes')) || [];
+
+        function addNote() {
+            const noteInput = document.getElementById("noteInput").value;
+            const noteUpdater = document.getElementById("noteUpdater").value;
+            const currentTime = new Date().toLocaleTimeString();
             
-            if (note.status === 'בטיפול') {
-                row.classList.add('highlight-yellow');
-            } else {
-                row.classList.add('highlight-green');
+            if (!noteInput) {
+                alert("אנא הקלד הערה.");
+                return;
             }
+
+            const newNote = {
+                text: noteInput,
+                status: 'בטיפול',
+                time: currentTime,
+                updater: noteUpdater
+            };
+
+            notes.push(newNote);
+            localStorage.setItem('notes', JSON.stringify(notes));
+            renderNotes();
+            document.getElementById("noteInput").value = "";
+        }
+
+        function renderNotes() {
+            const tableBody = document.getElementById("notesTableBody");
+            tableBody.innerHTML = '';
             
-            tableBody.appendChild(row);
-        });
-    }
+            notes.forEach((note, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${note.text}</td>
+                    <td>
+                        <select onchange="updateNoteStatus(${index}, this.value)">
+                            <option value="בטיפול" ${note.status === 'בטיפול' ? 'selected' : ''}>בטיפול</option>
+                            <option value="טופלה" ${note.status === 'טופלה' ? 'selected' : ''}>טופלה</option>
+                        </select>
+                    </td>
+                    <td>${note.time}</td>
+                    <td>${note.updater}</td>
+                    <td><button class="delete-btn" onclick="deleteNote(${index})">מחק</button></td>
+                `;
+                
+                if (note.status === 'בטיפול') {
+                    row.classList.add('highlight-yellow');
+                } else {
+                    row.classList.add('highlight-green');
+                }
+                
+                tableBody.appendChild(row);
+            });
+        }
 
-    function updateNoteStatus(index, status) {
-        notes[index].status = status;
-        localStorage.setItem('notes', JSON.stringify(notes));
-        renderNotes();
-    }
+        function updateNoteStatus(index, status) {
+            notes[index].status = status;
+            localStorage.setItem('notes', JSON.stringify(notes));
+            renderNotes();
+        }
 
-    function deleteNote(index) {
-        notes.splice(index, 1);
-        localStorage.setItem('notes', JSON.stringify(notes));
-        renderNotes();
-    }
+        function deleteNote(index) {
+            notes.splice(index, 1);
+            localStorage.setItem('notes', JSON.stringify(notes));
+            renderNotes();
+        }
 
-    // טעינת הערות בעת טעינת הדף
-    window.onload = function() {
-        updateTable();
-        renderNotes();
-    }
-</script>
+        // טעינת הערות בעת טעינת הדף
+        window.onload = function() {
+            updateTable();
+            renderNotes();
+        }
+    </script>
+
+</body>
+</html> 
