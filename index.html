@@ -3,479 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ניהול משימות לנהגים</title>
+    <title>דו"ח בוקר</title>
     <style>
-        body {
-            background-color: #f0f8ff; /* צבע רקע עדין */
-            font-family: Arial, sans-serif;
+        body { font-family: Arial, sans-serif; }
+        .header { text-align: right; }
+        .form-section, .report-section, .count-section { 
+            margin: 20px; 
+            padding: 20px; 
+            border: 1px solid #ccc; 
+            border-radius: 8px; 
+            background-color: #f9f9f9; 
         }
-        .flashing-green {
-            background-color: #90ee90;
-            animation: flash 1s infinite;
-        }
-        .flashing-red {
-            background-color: #ffcccb;
-            animation: flash 1s infinite;
-        }
-        .flashing-blue {
-            background-color: #add8e6;
-            animation: flash 1s infinite;
-        }
-        @keyframes flash {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-        .calendar, .form, .table, .reports, .messages, .reset-button {
-            margin: 20px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-    <!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>-</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 12px;
-        }
-        h1, label, th, td, .btn, select, input {
-            font-size: 1.4em;
-            font-weight: bold;
-        }
-        label {
-            margin-right: 15px;
-        }
-        .form-row {
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        table {
-            width: 80%;
-            margin: 12px auto;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 12px;
-            text-align: center;
-        }
-        .warehouse-1 {
-            color: purple;
-        }
-        .warehouse-4 {
-            color: green;
-        }
-        .btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px10px;
-            border: none;
-            cursor: pointer;
-        }
-        .btn:hover {
-            background-color: #45a049;
-        }
-        .summary {
-            margin-top: 20px;
-            font-size: 1.8em;
-            font-weight: bold;
-        }
-        .summary .warehouse-1 {
-            color: purple;
-        }
-        .summary .warehouse-4 {
-          
-        }
+        .highlight { background-color: #e0ffe0; color: #ff0000; }
+        .button { background-color: green; color: white; padding: 10px; border: none; cursor: pointer; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: right; }
+        th { background-color: #d0e0ff; }
+        td { background-color: #ffffff; }
+        .form-label { display: block; margin: 10px 0 5px; }
+        .form-select, .form-input { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        .whatsapp-message { font-weight: bold; }
+        .warehouse-1 { background-color: #e0b0ff; } /* צבע סגול למחסן 1 */
+        .warehouse-4 { background-color: #b2fba0; } /* צבע ירוק למחסן 4 */
+        @keyframes flash { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; }
     </style>
 </head>
 <body>
-  <p>
-<p>
- <p>
-    <div>
-        <div class="form-row">
-            <label for="driver">נהג:</label>
-            <select id="driver">
-                <option value="עלי">עלי</option>
-                <option value="חכמת">חכמת</option>
-                <option value="שאול">שאול</option>
-                <option value="יואב">יואב</option>
-                <option value="עלאא">עלאא</option>
-            </select>
-        </div>
-        <div class="form-row">
-            <label for="client">👤לקוח:</label>
-            <input type="text" id="client" placeholder="הכנס שם לקוח">
-        </div>
-        <div class="form-row">
-            <label for="warehouse">📍מחסן:</label>
-            <select id="warehouse">
-                <option value="מחסן 1">מחסן 1</option>
-                <option value="מחסן 4">מחסן 4</option>
-            </select>
-        </div>
-        <div class="form-row">
-            <label for="exit-number">יציאה:</label>
-            <select id="exit-number">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-            </select>
-        </div>
-        <div class="form-row">
-            <label for="time">⏰שעה:</label>
-            <select id="time">
-                <option value="06:00">06:00</option>
-                <option value="07:00">07:00</option>
-                <option value="08:00">08:00</option>
-                <option value="09:00">09:00</option>
-                <option value="10:00">10:00</option>
-                <option value="11:00">11:00</option>
-                <option value="12:00">12:00</option>
-                <option value="13:00">13:00</option>
-                <option value="14:00">14:00</option>
-                <option value="15:00">15:00</option>
-                <option value="16:00">16:00</option>
-                <option value="17:00">17:00</option>
-            </select>
-        </div>
-        <div class="form-row">
-            <label for="transport-type">סוג הובלה:</label>
-            <select id="transport-type">
-                <option value="הובלת מנוף🚚 ">הובלת מנוף</option>
-                <option value="הובלת מנוף 🚛15">הובלת מנוף 15</option>
-                <option value="הובלת משאית   🚛">הובלת משאית </option>
-                <option value="טנדר📤 ">טנדר</option>
-                <option value="עבודת מנוף">עבודת מנוף</option>
-            </select>
-        </div>
-        <button class="btn" onclick="addExit()">הוספת יציאה</button>
+    <div class="header">
+        <h1>דו"ח בוקר</h1>
+        <p id="date-time"></p>
     </div>
-    <table id="summary-table">
-        <thead>
-            <tr>
-                <th>נהג</th>
-                <th>לקוח</th>
-                <th>מחסן</th>
-                <th>יציאה</th>
-                <th>שעה</th>
-                <th>סוג הובלה</th>
-                <th>פעולות</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-    <div class="summary" id="driver-summary"></div>
-    <button class="btn" onclick="shareData()"></button>
+
+    <div class="form-section">
+        <h2>שאלון</h2>
+        <form id="morning-report-form">
+            <label class="form-label" for="driver-name">שם נהג:</label>
+            <select id="driver-name" class="form-select">
+                <option>חכמת</option>
+                <option>שאול</option>
+                <option>עלי</option>
+                <option>עלא</option>
+                <option>יואב</option>
+            </select>
+            <label class="form-label" for="client-name">שם לקוח:</label>
+            <input type="text" id="client-name" class="form-input">
+            <label class="form-label" for="warehouse">מחסן:</label>
+            <select id="warehouse" class="form-select">
+                <option value="1">1</option>
+                <option value="4">4</option>
+            </select>
+            <label class="form-label" for="delivery-time">שעת אספקה:</label>
+            <select id="delivery-time" class="form-select">
+                <option>06:00</option>
+                <option>07:00</option>
+                <option>08:00</option>
+                <option>09:00</option>
+                <option>10:00</option>
+                <option>11:00</option>
+                <option>12:00</option>
+                <option>13:00</option>
+                <option>14:00</option>
+                <option>15:00</option>
+                <option>16:00</option>
+                <option>17:00</option>
+            </select>
+            <label class="form-label" for="exit">יציאה:</label>
+            <select id="exit" class="form-select">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+            </select>
+            <label class="form-label" for="transport-type">סוג הובלה:</label>
+            <select id="transport-type" class="form-select">
+                <option>הובלת משאית</option>
+                <option>הובלה מנוף</option>
+                <option>הובלת מנוף 15 מטר</option>
+                <option>עבודת מנוף</option>
+            </select>
+            <button type="button" class="button" onclick="addTask()">הוסף משימה</button>
+        </form>
+    </div>
+
+    <div class="report-section">
+        <h2>דו"ח בוקר</h2>
+        <table id="report-table">
+            <thead>
+                <tr>
+                    <th>תאריך</th>
+                    <th>נהג</th>
+                    <th>לקוח</th>
+                    <th>מחסן</th>
+                    <th>יציאה</th>
+                    <th>סוג הובלה</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- נתונים יתווספו כאן -->
+            </tbody>
+        </table>
+        <div id="summary" style="margin-top: 20px;">
+            <p>ספירת יציאות: <span id="exit-count">0</span></p>
+            <p>ספירה לפי מחסן 1: <span id="warehouse-1-count">0</span></p>
+            <p>ספירה לפי מחסן 4: <span id="warehouse-4-count">0</span></p>
+        </div>
+    </div>
+
+    <div class="count-section highlight">
+        <h2>ספירת יציאות</h2>
+        <p>כמות נהגים פעילים: <span id="active-drivers-count">0</span></p>
+        <button class="button" onclick="shareWhatsApp()">📞 שתף לווצאפ</button>
+    </div>
 
     <script>
-        let exits = [];
-
-        function addExit() {
-            const driver = document.getElementById('driver').value;
-            const client = document.getElementById('client').value;
+        function addTask() {
+            // הוספת משימה לטבלה
+            const table = document.getElementById('report-table').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
             const warehouse = document.getElementById('warehouse').value;
-            const exitNumber = document.getElementById('exit-number').value;
-            const time = document.getElementById('time').value;
-            const transportType = document.getElementById('transport-type').value;
-
-            const newExit = { driver, client, warehouse, exitNumber, time, transportType };
-            exits.push(newExit);
-            updateTable();
+            newRow.innerHTML = `<td>${new Date().toLocaleDateString()}</td>
+                                <td>${document.getElementById('driver-name').value}</td>
+                                <td>${document.getElementById('client-name').value}</td>
+                                <td class="${warehouse === '1' ? 'warehouse-1' : 'warehouse-4'}">${warehouse}</td>
+                                <td>${document.getElementById('exit').value}</td>
+                                <td>${document.getElementById('transport-type').value}</td>`;
+            updateCounts();
         }
 
-        function deleteExit(index) {
-            exits.splice(index, 1);
-            updateTable();
+        function updateCounts() {
+            // עדכון ספירות
+            const count = document.getElementById('report-table').getElementsByTagName('tbody')[0].rows.length;
+            document.getElementById('active-drivers-count').innerText = count;
+
+            let exitCount = 0;
+            let warehouse1Count = 0;
+            let warehouse4Count = 0;
+
+            const rows = document.getElementById('report-table').getElementsByTagName('tbody')[0].rows;
+            for (let i = 0; i < rows.length; i++) {
+                exitCount++;
+                const warehouseCell = rows[i].cells[3].innerText;
+                if (warehouseCell === '1') {
+                    warehouse1Count++;
+                } else if (warehouseCell === '4') {
+                    warehouse4Count++;
+                }
+            }
+
+            document.getElementById('exit-count').innerText = exitCount;
+            document.getElementById('warehouse-1-count').innerText = warehouse1Count;
+            document.getElementById('warehouse-4-count').innerText = warehouse4Count;
         }
 
-        function updateTable() {
-            const tbody = document.getElementById('summary-table').querySelector('tbody');
-            tbody.innerHTML = '';
-            exits.forEach((exit, index) => {
-                const row = `
-                    <tr class="${exit.warehouse === 'מחסן 1' ? 'warehouse-1' : 'warehouse-4'}">
-                        <td>${exit.driver}</td>
-                        <td>${exit.client}</td>
-                        <td>${exit.warehouse}</td>
-                        <td>${exit.exitNumber}</td>
-                        <td>${exit.time}</td>
-                        <td>${exit.transportType}</td>
-                        <td><button onclick="deleteExit(${index})">מחק</button></td>
-                    </tr>
-                `;
-                tbody.innerHTML += row;
-            });
-            updateSummary();
+        function shareWhatsApp() {
+            // שיתוף לווצאפ
+            const rows = document.getElementById('report-table').getElementsByTagName('tbody')[0].rows;
+            let message = '*דו"ח בוקר:*\n';
+            let exitCount = 0;
+            let warehouse1Count = 0;
+            let warehouse4Count = 0;
+
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].cells;
+                message += `📅 תאריך: ${cells[0].innerText}\n`;
+                message += `🚗 נהג: ${cells[1].innerText}\n`;
+                message += `👤 לקוח: ${cells[2].innerText}\n`;
+                message += `🏭 מחסן: ${cells[3].innerText}\n`;
+                message += `🚪 יציאה: ${cells[4].innerText}\n`;
+                message += `🚚 סוג הובלה: ${cells[5].innerText}\n\n`;
+                exitCount++;
+                if (cells[3].innerText === '1') {
+                    warehouse1Count++;
+                } else if (cells[3].innerText === '4') {
+                    warehouse4Count++;
+                }
+            }
+
+            message += `📊 ספירת יציאות: ${exitCount}\n`;
+            message += `🏭 ספירה לפי מחסן 1: ${warehouse1Count}\n`;
+            message += `🏭 ספירה לפי מחסן 4: ${warehouse4Count}\n`;
+
+            const phoneNumber = '972508860896';
+            window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`);
         }
 
-        function updateSummary() {
-            const totalExits = exits.length;
-            const driversWithExits = new Set(exits.map(exit => exit.driver)).size;
-            const warehouse1Exits = exits.filter(exit => exit.warehouse === 'מחסן 1').length;
-            const warehouse4Exits = exits.filter(exit => exit.warehouse === 'מחסן 4').length;
-
-            const summaryDiv = document.getElementById('driver-summary');
-            summaryDiv.innerHTML = `
-                <div>סה"כ יציאות: ${totalExits}</div>
-                <div>סה"כ נהגים עם יציאות: ${driversWithExits}</div>
-                <div class="warehouse-1">יציאות ממחסן 1: ${warehouse1Exits}</div>
-                <div class="warehouse-4">יציאות ממחסן 4: ${warehouse4Exits}</div>
-            `;
-        }
-
-        function shareData() {
-            let data = '';
-            const groupedExits = exits.reduce((acc, exit) => {
-                acc[exit.driver] = acc[exit.driver] || [];
-                acc[exit.driver].push(exit);
-                return acc;
-            }, {});
-
-            Object.entries(groupedExits).forEach(([driver, driverExits]) => {
-                data += `*${driver}*\n`;
-                driverExits.forEach(exit => {
-                    data += `${exit.client} ${exit.warehouse} ${exit.exitNumber} ${exit.time} ${exit.transportType}\n`;
-                });
-            });
-
-            const totalExits = exits.length;
-            data += `סה"כ יציאות: ${totalExits}`;
-
-            const whatsappLink = `https://wa.me/972508860896?text=${encodeURIComponent(data)}`;
-            window.open(whatsappLink, '_blank');
-        }
+        // הצגת תאריך ושעה אונליין
+        setInterval(() => {
+            document.getElementById('date-time').innerText = new Date().toLocaleString();
+        }, 1000);
     </script>
 </body>
 </html>
-
-<body>
-
-    <!-- לוח שנה -->
-    <div class="calendar">
-        <h2>לוח שנה</h2>
-        <!-- לוח שנה דינאמי יתווסף כאן -->
-    </div>
-
-    <!-- טופס ניהול יציאות -->
-    <div class="form">
-        <h2>טופס ניהול יציאות</h2>
-        <form>
-            <label for="driver">נהג:</label>
-            <select id="driver">
-                <option>חכמת</option>
-                <option>עלי</option>
-                <option>יואב</option>
-                <option>שאול</option>
-                <option>עלאא</option>
-            </select>
-            <br>
-            <label for="customer-name">שם לקוח:</label>
-            <input type="text" id="customer-name">
-            <br>
-            <label for="customer-address">כתובת לקוח:</label>
-            <input type="text" id="customer-address">
-            <br>
-            <label for="order-status">סטטוס הזמנה:</label>
-            <select id="order-status">
-                <option class="flashing-green">כן</option>
-                <option class="flashing-red">לא</option>
-            </select>
-            <br>
-            <label for="warehouse">מחסן מוצא:</label>
-            <select id="warehouse">
-                <option class="flashing-blue">מחסן 1</option>
-                <option class="flashing-green">מחסן 4</option>
-            </select>
-            <br>
-            <label for="exit-number">מספר יציאה:</label>
-            <select id="exit-number">
-                <option>יציאה 1</option>
-                <option>יציאה 2</option>
-                <option>יציאה 3</option>
-                <option>יציאה 4</option>
-                <option>יציאה 5</option>
-            </select>
-            <br>
-            <label for="time">שעה:</label>
-            <select id="time">
-                <!-- שעות בין 06:00–17:00 -->
-                <option>06:00</option>
-                <option>06:30</option>
-                <!-- הוספת שעות נוספות -->
-            </select>
-            <br>
-            <label for="transport-type">סוג הובלה:</label>
-            <select id="transport-type">
-                <option>משאית 🚚</option>
-                <option>טנדר 🚚</option>
-                <option>מנוף 15 מטר</option>
-                <option>מנוף 10 מטר</option>
-            </select>
-        </form>
-    </div>
-
-    <!-- טבלה דינאמית -->
-    <div class="table">
-        <h2>טבלה דינאמית</h2>
-        <!-- טבלה להצגת משימות -->
-    </div>
-
-    <!-- דוחות סטטיסטיים -->
-    <div class="reports">
-        <h2>דוחות סטטיסטיים</h2>
-        <!-- דוחות יתווספו כאן -->
-    </div>
-
-    <!-- תיבת הודעות -->
-    <div class="messages">
-        <h2>תיבת הודעות</h2>
-        <form>
-            <label for="note-writer">כותב ההערה:</label>
-            <select id="note-writer">
-                <option>אורן</option>
-                <option>יואב</option>
-                <option>איציק</option>
-                <option>נתנאל</option>
-                <option>הראל</option>
-                <option>תמיר</option>
-            </select>
-            <br>
-            <label for="note">הערה:</label>
-            <textarea id="note"></textarea>
-        </form>
-    </div>
-
-    <!-- כפתור מחיקת סידור -->
-    <div class="reset-button">
-        <button>מחיקת סידור</button>
-    </div>
-
-    <script>
-        // הוספת משתנה גלובלי לשמירת היציאות
-        let exits = JSON.parse(localStorage.getItem('exits')) || [];
-        
-        // עדכון פונקציית addExit
-        function addExit() {
-            const driver = document.getElementById('driver').value;
-            const client = document.getElementById('client').value;
-            const warehouse = document.getElementById('warehouse').value;
-            const exitNumber = document.getElementById('exit-number').value;
-            const time = document.getElementById('time').value;
-            const transportType = document.getElementById('transport-type').value;
-
-            const newExit = { driver, client, warehouse, exitNumber, time, transportType };
-            exits.push(newExit);
-            // שמירה ב-localStorage
-            localStorage.setItem('exits', JSON.stringify(exits));
-            updateTable();
-        }
-
-        // עדכון פונקציית deleteExit
-        function deleteExit(index) {
-            exits.splice(index, 1);
-            // עדכון ה-localStorage לאחר מחיקה
-            localStorage.setItem('exits', JSON.stringify(exits));
-            updateTable();
-        }
-
-        // הוספת טעינת נתונים בעת טעינת הדף
-        window.onload = function() {
-            updateTable();
-        }
-
-        // ... rest of the existing code ...
-
-        // עבור החלק של ההערות, נוסיף שמירה גם להערות
-        let notes = JSON.parse(localStorage.getItem('notes')) || [];
-
-        function addNote() {
-            const noteInput = document.getElementById("noteInput").value;
-            const noteUpdater = document.getElementById("noteUpdater").value;
-            const currentTime = new Date().toLocaleTimeString();
-            
-            if (!noteInput) {
-                alert("אנא הקלד הערה.");
-                return;
-            }
-
-            const newNote = {
-                text: noteInput,
-                status: 'בטיפול',
-                time: currentTime,
-                updater: noteUpdater
-            };
-
-            notes.push(newNote);
-            localStorage.setItem('notes', JSON.stringify(notes));
-            renderNotes();
-            document.getElementById("noteInput").value = "";
-        }
-
-        function renderNotes() {
-            const tableBody = document.getElementById("notesTableBody");
-            tableBody.innerHTML = '';
-            
-            notes.forEach((note, index) => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${note.text}</td>
-                    <td>
-                        <select onchange="updateNoteStatus(${index}, this.value)">
-                            <option value="בטיפול" ${note.status === 'בטיפול' ? 'selected' : ''}>בטיפול</option>
-                            <option value="טופלה" ${note.status === 'טופלה' ? 'selected' : ''}>טופלה</option>
-                        </select>
-                    </td>
-                    <td>${note.time}</td>
-                    <td>${note.updater}</td>
-                    <td><button class="delete-btn" onclick="deleteNote(${index})">מחק</button></td>
-                `;
-                
-                if (note.status === 'בטיפול') {
-                    row.classList.add('highlight-yellow');
-                } else {
-                    row.classList.add('highlight-green');
-                }
-                
-                tableBody.appendChild(row);
-            });
-        }
-
-        function updateNoteStatus(index, status) {
-            notes[index].status = status;
-            localStorage.setItem('notes', JSON.stringify(notes));
-            renderNotes();
-        }
-
-        function deleteNote(index) {
-            notes.splice(index, 1);
-            localStorage.setItem('notes', JSON.stringify(notes));
-            renderNotes();
-        }
-
-        // טעינת הערות בעת טעינת הדף
-        window.onload = function() {
-            updateTable();
-            renderNotes();
-        }
-    </script>
-
-</body>
-</html> 
